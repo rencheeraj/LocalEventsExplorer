@@ -1,0 +1,13 @@
+{
+  "name": "local-events-mock-api",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "seed": "node seed.js",
+    "start": "npx json-server --watch db.json --port 3001"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.0.0",
+    "json-server": "^0.17.4"
+  }
+}

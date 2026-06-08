@@ -4,6 +4,7 @@
 //
 //  Created by Rencheeraj Mohan on 2026-06-08.
 //
+
 import XCTest
 
 final class LocalEventsExplorerUITestsLaunchTests: XCTestCase {
