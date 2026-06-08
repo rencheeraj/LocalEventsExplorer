@@ -4,6 +4,7 @@ import CoreLocation
 protocol LocationServiceProtocol: Sendable {
     var locationPublisher: AnyPublisher<CLLocation?, Never> { get }
     var authorizationPublisher: AnyPublisher<CLAuthorizationStatus, Never> { get }
+    var currentLocation: CLLocation? { get }
     func requestPermission()
     func startUpdating()
     func stopUpdating()
@@ -20,6 +21,10 @@ final class LocationService: NSObject, LocationServiceProtocol, CLLocationManage
 
     nonisolated var authorizationPublisher: AnyPublisher<CLAuthorizationStatus, Never> {
         authorizationSubject.eraseToAnyPublisher()
+    }
+
+    nonisolated var currentLocation: CLLocation? {
+        locationSubject.value
     }
 
     override init() {

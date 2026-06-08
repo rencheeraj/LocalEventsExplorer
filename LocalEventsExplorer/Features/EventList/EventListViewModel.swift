@@ -23,7 +23,9 @@ final class EventListViewModel: ObservableObject {
     func loadEvents(forceRefresh: Bool = false) {
         loadTask?.cancel()
         loadTask = Task {
-            if !forceRefresh {
+            if case .loading = state {
+                // Keep loading state only on initial load
+            } else if case .error = state {
                 state = .loading
             }
 
@@ -52,8 +54,18 @@ final class EventListViewModel: ObservableObject {
     func toggleBookmark(for event: Event) {
         Task {
             do {
-                try await repository.setBookmark(!event.isBookmarked, for: event)
-                loadEvents(forceRefresh: false)
+                let newValue = !event.isBookmarked
+                try await repository.setBookmark(newValue, for: event)
+                // Optimistically update the current list immediately
+                if case .loaded(let events) = state {
+                    let updated = events.map { existing in
+                        guard existing.id == event.id else { return existing }
+                        var copy = existing
+                        copy.isBookmarked = newValue
+                        return copy
+                    }
+                    state = .loaded(updated)
+                }
             } catch {
                 state = .error(error.localizedDescription)
             }

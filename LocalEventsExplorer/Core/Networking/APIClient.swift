@@ -18,10 +18,17 @@ final class URLSessionAPIClient: APIClient {
 
     nonisolated init(
         baseURL: URL = URL(string: "http://localhost:3001")!,
-        session: URLSession = .shared
+        session: URLSession? = nil
     ) {
         self.baseURL = baseURL
-        self.session = session
+        if let session {
+            self.session = session
+        } else {
+            let config = URLSessionConfiguration.default
+            config.timeoutIntervalForRequest = 10
+            config.timeoutIntervalForResource = 15
+            self.session = URLSession(configuration: config)
+        }
 
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601

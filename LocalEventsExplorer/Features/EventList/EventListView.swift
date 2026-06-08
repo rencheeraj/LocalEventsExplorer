@@ -8,6 +8,9 @@ struct EventListView: View {
         NavigationStack {
             content
                 .navigationTitle("Events")
+                .onAppear {
+                    viewModel.loadEvents()
+                }
                 .toolbar {
                     if viewModel.isShowingCachedData {
                         ToolbarItem(placement: .bottomBar) {
@@ -18,9 +21,6 @@ struct EventListView: View {
                 .refreshable {
                     viewModel.loadEvents(forceRefresh: true)
                 }
-        }
-        .onAppear {
-            viewModel.loadEvents()
         }
     }
 

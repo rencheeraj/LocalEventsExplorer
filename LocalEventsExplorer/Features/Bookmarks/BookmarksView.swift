@@ -8,9 +8,9 @@ struct BookmarksView: View {
         NavigationStack {
             content
                 .navigationTitle("Bookmarks")
-        }
-        .onAppear {
-            viewModel.loadBookmarks()
+                .onAppear {
+                    viewModel.loadBookmarks()
+                }
         }
     }
 

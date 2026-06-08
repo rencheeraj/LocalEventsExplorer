@@ -1,4 +1,3 @@
-import Combine
 import CoreLocation
 
 final class EventRepositoryImpl: EventRepository {
@@ -52,21 +51,7 @@ final class EventRepositoryImpl: EventRepository {
     }
 
     private func attachDistances(to events: [Event]) -> [Event] {
-        var userLocation: CLLocation?
-        let semaphore = DispatchSemaphore(value: 0)
-        var cancellable: (any Sendable)?
-
-        cancellable = locationService.locationPublisher
-            .first()
-            .sink { location in
-                userLocation = location
-                semaphore.signal()
-                _ = cancellable
-            }
-
-        semaphore.wait()
-
-        guard let location = userLocation else { return events }
+        guard let location = locationService.currentLocation else { return events }
 
         return events.map { event in
             var updated = event

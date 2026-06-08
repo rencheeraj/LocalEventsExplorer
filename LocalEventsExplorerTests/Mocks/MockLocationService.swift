@@ -14,6 +14,10 @@ final class MockLocationService: LocationServiceProtocol, @unchecked Sendable {
         authSubject.eraseToAnyPublisher()
     }
 
+    nonisolated var currentLocation: CLLocation? {
+        locationSubject.value
+    }
+
     var mockLocation: CLLocation? {
         didSet { locationSubject.send(mockLocation) }
     }
