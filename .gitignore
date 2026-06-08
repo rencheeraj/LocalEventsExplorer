@@ -1,0 +1,15 @@
+# Xcode
+DerivedData/
+.build/
+
+# User settings
+*.xcuserstate
+xcuserdata/
+
+# Swift Package Manager
+Packages/
+Package.resolved
+
+# Assessment specification
+
+CLAUDE.md
