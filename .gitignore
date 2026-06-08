@@ -13,3 +13,5 @@ Package.resolved
 # Assessment specification
 
 CLAUDE.md
+# Claude Code
+.claude/
